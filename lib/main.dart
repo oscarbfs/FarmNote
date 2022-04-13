@@ -16,6 +16,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ThemeData tema = ThemeData();
     return MultiProvider(
       providers: [
         Provider<FarmNoteStore>(
@@ -25,8 +26,11 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'FarmNote',
-        theme: ThemeData(
-          primarySwatch: Colors.green,
+        theme: tema.copyWith(
+          colorScheme: tema.colorScheme.copyWith(
+            primary: Colors.green,
+            secondary: Colors.yellow,
+          ),
         ),
         home: const HomePage(),
         routes: {
