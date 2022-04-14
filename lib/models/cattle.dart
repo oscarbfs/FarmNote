@@ -1,6 +1,8 @@
 import 'dart:io';
 
-class Cattle {
+import 'package:flutter/material.dart';
+
+class Cattle with ChangeNotifier{
   final String id;
   final String name;
   final String description;
