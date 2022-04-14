@@ -1,5 +1,4 @@
 import 'package:farm_note/components/image_input.dart';
-import 'package:farm_note/models/cattle.dart';
 import 'package:farm_note/store/farmnote.store.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -78,7 +77,7 @@ class CattleFormPage extends StatelessWidget {
                           ),
                           Expanded(
                             child: Container(
-                                child: store.weightController.text != ''
+                                child: store.weightController != null
                                     ? Text(
                                         'Peso(@): ${store.formData['weightArroba']}')
                                     : const Text('Peso(@): 0.0')
@@ -106,8 +105,8 @@ class CattleFormPage extends StatelessWidget {
                   icon: const Icon(Icons.add),
                   label: const Text('Adicionar'),
                   style: ElevatedButton.styleFrom(
-                    onPrimary: Colors.black,
-                    primary: Theme.of(context).accentColor,
+                    onPrimary: Colors.white,
+                    primary: Theme.of(context).colorScheme.primary,
                     elevation: 0,
                     tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                   ),

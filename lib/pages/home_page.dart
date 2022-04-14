@@ -13,7 +13,7 @@ class HomePage extends StatelessWidget {
     final store = Provider.of<FarmNoteStore>(context);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Menus Lugares'),
+        title: const Text('Meu Gado'),
         actions: [
           IconButton(
             icon: Icon(Icons.add),

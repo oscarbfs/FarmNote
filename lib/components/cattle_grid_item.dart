@@ -1,7 +1,6 @@
 import 'package:farm_note/models/cattle.dart';
 import 'package:farm_note/utils/app_routes.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
 import 'package:provider/provider.dart';
 
 class CattleGridItem extends StatelessWidget {
@@ -32,7 +31,7 @@ class CattleGridItem extends StatelessWidget {
             backgroundColor: Colors.black87,
             leading: Text(
               "Peso: \n ${cattle.weightKg.toString()}Kg \n ${cattle.weightArroba.toStringAsFixed(2)}@",
-              style: TextStyle(color: Theme.of(context).primaryColor),
+              style: TextStyle(color: Theme.of(context).colorScheme.primary),
             ),
             title: Text(
               cattle.name,
@@ -40,7 +39,7 @@ class CattleGridItem extends StatelessWidget {
             ),
             trailing: Text(
               "Crescimento: \n ${cattle.growthRate.toStringAsFixed(2)}%",
-              style: TextStyle(color: Theme.of(context).primaryColor),
+              style: TextStyle(color: Theme.of(context).colorScheme.primary),
             ),
           ),
         ),

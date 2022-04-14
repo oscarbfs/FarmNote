@@ -36,7 +36,7 @@ class ImageInput extends StatelessWidget {
               icon: const Icon(Icons.camera),
               label: const Text('Tirar foto'),
               style: ElevatedButton.styleFrom(
-                onPrimary: Theme.of(context).primaryColor,
+                onPrimary: Theme.of(context).colorScheme.primary,
               ),
               onPressed: () => store.takePicture(onSelectImage),
             ),
