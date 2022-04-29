@@ -100,6 +100,9 @@ abstract class _FarmNoteStore with Store {
   var nameController = TextEditingController();
 
   @observable
+  var weightArroba = 0.0;
+
+  @observable
   File? pickedImage;
 
   @action
@@ -134,7 +137,7 @@ abstract class _FarmNoteStore with Store {
   File? storedImage;
 
   @action
-  takePicture(Function onSelectImage) async {
+  takePicture() async {
     final ImagePicker _picker = ImagePicker();
     XFile imageFile = await _picker.pickImage(
       source: ImageSource.camera,
@@ -147,6 +150,6 @@ abstract class _FarmNoteStore with Store {
     String fileName = path.basename(storedImage!.path);
     final savedImage = await storedImage!.copy('${appDir.path}/$fileName');
 
-    onSelectImage(savedImage);
+    selectImage(savedImage);
   }
 }

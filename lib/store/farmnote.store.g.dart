@@ -145,6 +145,21 @@ mixin _$FarmNoteStore on _FarmNoteStore, Store {
     });
   }
 
+  final _$weightArrobaAtom = Atom(name: '_FarmNoteStore.weightArroba');
+
+  @override
+  double get weightArroba {
+    _$weightArrobaAtom.reportRead();
+    return super.weightArroba;
+  }
+
+  @override
+  set weightArroba(double value) {
+    _$weightArrobaAtom.reportWrite(value, super.weightArroba, () {
+      super.weightArroba = value;
+    });
+  }
+
   final _$pickedImageAtom = Atom(name: '_FarmNoteStore.pickedImage');
 
   @override
@@ -194,8 +209,8 @@ mixin _$FarmNoteStore on _FarmNoteStore, Store {
   final _$takePictureAsyncAction = AsyncAction('_FarmNoteStore.takePicture');
 
   @override
-  Future takePicture(Function onSelectImage) {
-    return _$takePictureAsyncAction.run(() => super.takePicture(onSelectImage));
+  Future takePicture() {
+    return _$takePictureAsyncAction.run(() => super.takePicture());
   }
 
   final _$_FarmNoteStoreActionController =
@@ -258,6 +273,7 @@ imageUrlController: ${imageUrlController},
 formKey: ${formKey},
 formData: ${formData},
 nameController: ${nameController},
+weightArroba: ${weightArroba},
 pickedImage: ${pickedImage},
 storedImage: ${storedImage}
     ''';

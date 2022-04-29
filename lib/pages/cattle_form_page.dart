@@ -30,16 +30,17 @@ class CattleFormPage extends StatelessWidget {
                         decoration: const InputDecoration(labelText: 'Nome'),
                         textInputAction: TextInputAction.next,
                         onFieldSubmitted: (_) {
-                          FocusScope.of(context).requestFocus(store.weightFocus);
+                          FocusScope.of(context)
+                              .requestFocus(store.weightFocus);
                         },
                         onSaved: (name) => store.formData['name'] = name ?? '',
                         validator: (_name) {
                           final name = _name ?? '';
-      
+
                           if (name.trim().isEmpty) {
                             return 'Nome é obrigatório.';
                           }
-      
+
                           if (name.trim().length < 3) {
                             return 'Nome precisa de no mínimo 3 letras.';
                           }
@@ -59,7 +60,8 @@ class CattleFormPage extends StatelessWidget {
                                 FocusScope.of(context)
                                     .requestFocus(store.descriptionFocus);
                               },
-                              keyboardType: const TextInputType.numberWithOptions(
+                              keyboardType:
+                                  const TextInputType.numberWithOptions(
                                 decimal: true,
                               ),
                               onSaved: (weight) {
@@ -70,24 +72,21 @@ class CattleFormPage extends StatelessWidget {
                                 store.formData['growthRate'] = 0.0;
                               },
                               onChanged: (weight) {
-                                store.formData['weightArroba'] = double.parse(weight) / 30;
-                                print(store.formData['weightArroba']);
+                                store.weightArroba = double.parse(weight) / 30;
                               },
                             ),
                           ),
                           Expanded(
                             child: Container(
-                                child: store.weightController != null
-                                    ? Text(
-                                        'Peso(@): ${store.formData['weightArroba']}')
-                                    : const Text('Peso(@): 0.0')
-                              ),
+                              child: Text('Peso(@): ${store.weightArroba}')
+                            ),
                           ),
                         ],
                       ),
                       TextFormField(
                         initialValue: store.formData['description']?.toString(),
-                        decoration: const InputDecoration(labelText: 'Descrição'),
+                        decoration:
+                            const InputDecoration(labelText: 'Descrição'),
                         focusNode: store.descriptionFocus,
                         keyboardType: TextInputType.multiline,
                         maxLines: 3,
@@ -95,36 +94,36 @@ class CattleFormPage extends StatelessWidget {
                             store.formData['description'] = description ?? '',
                       ),
                       const SizedBox(height: 10),
-                      ImageInput(store.selectImage),
+                      ImageInput(),
                     ],
                   ),
                 ),
               ),
             ),
             ElevatedButton.icon(
-                  icon: const Icon(Icons.add),
-                  label: const Text('Adicionar'),
-                  style: ElevatedButton.styleFrom(
-                    onPrimary: Colors.white,
-                    primary: Theme.of(context).colorScheme.primary,
-                    elevation: 0,
-                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                  ),
-                  onPressed: store.isValidForm()
-                      ? () => store.submitForm(
-                            context,
-                            store.formData['description'].toString(),
-                            double.tryParse(
-                                    store.formData['weightKg'].toString()) ??
-                                0.0,
-                            double.tryParse(
-                                    store.formData['weightArroba'].toString()) ??
-                                0.0,
-                            double.tryParse(
-                                    store.formData['growthRate'].toString()) ??
-                                0.0,
-                          )
-                      : null),
+                icon: const Icon(Icons.add),
+                label: const Text('Adicionar'),
+                style: ElevatedButton.styleFrom(
+                  onPrimary: Colors.white,
+                  primary: Theme.of(context).colorScheme.primary,
+                  elevation: 0,
+                  tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                ),
+                onPressed: store.isValidForm()
+                    ? () => store.submitForm(
+                          context,
+                          store.formData['description'].toString(),
+                          double.tryParse(
+                                  store.formData['weightKg'].toString()) ??
+                              0.0,
+                          double.tryParse(
+                                  store.formData['weightArroba'].toString()) ??
+                              0.0,
+                          double.tryParse(
+                                  store.formData['growthRate'].toString()) ??
+                              0.0,
+                        )
+                    : null),
           ],
         ),
       ),

@@ -5,10 +5,6 @@ import 'package:provider/provider.dart';
 
 class ImageInput extends StatelessWidget {
 
-  final Function onSelectImage;
-
-  ImageInput(this.onSelectImage);
-
   @override
   Widget build(BuildContext context) {
     final store = Provider.of<FarmNoteStore>(context);
@@ -38,7 +34,7 @@ class ImageInput extends StatelessWidget {
               style: ElevatedButton.styleFrom(
                 onPrimary: Theme.of(context).colorScheme.primary,
               ),
-              onPressed: () => store.takePicture(onSelectImage),
+              onPressed: () => store.takePicture(),
             ),
           )
         ],
