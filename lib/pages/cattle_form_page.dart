@@ -72,7 +72,7 @@ class CattleFormPage extends StatelessWidget {
                                 store.formData['growthRate'] = 0.0;
                               },
                               onChanged: (weight) {
-                                store.weightArroba = double.parse(weight) / 30;
+                                store.weightArroba = weight == "" ? 0 / 30 : double.parse(weight) / 30;
                               },
                             ),
                           ),
