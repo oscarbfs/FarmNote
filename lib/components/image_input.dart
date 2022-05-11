@@ -1,6 +1,7 @@
 import 'package:farm_note/store/farmnote.store.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
 class ImageInput extends StatelessWidget {
@@ -28,13 +29,25 @@ class ImageInput extends StatelessWidget {
           ),
           const SizedBox(height: 10),
           Expanded(
-            child: TextButton.icon(
-              icon: const Icon(Icons.camera),
-              label: const Text('Tirar foto'),
-              style: ElevatedButton.styleFrom(
-                onPrimary: Theme.of(context).colorScheme.primary,
-              ),
-              onPressed: () => store.takePicture(),
+            child: Column(
+              children: [
+                TextButton.icon(
+                  icon: const Icon(Icons.camera),
+                  label: const Text('Tirar foto'),
+                  style: ElevatedButton.styleFrom(
+                    onPrimary: Theme.of(context).colorScheme.primary,
+                  ),
+                  onPressed: () => store.takePicture(ImageSource.camera),
+                ),
+                TextButton.icon(
+                  icon: const Icon(Icons.photo),
+                  label: const Text('Galeria'),
+                  style: ElevatedButton.styleFrom(
+                    onPrimary: Theme.of(context).colorScheme.primary,
+                  ),
+                  onPressed: () => store.takePicture(ImageSource.gallery),
+                ),
+              ],
             ),
           )
         ],

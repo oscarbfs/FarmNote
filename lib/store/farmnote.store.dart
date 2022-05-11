@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:farm_note/models/cattle.dart';
 import 'package:farm_note/utils/data_base.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mobx/mobx.dart';
 import 'package:provider/provider.dart';
@@ -14,7 +15,7 @@ part 'farmnote.store.g.dart';
 
 class FarmNoteStore = _FarmNoteStore with _$FarmNoteStore;
 
-abstract class _FarmNoteStore with Store {
+abstract class _FarmNoteStore with Store, ChangeNotifier {
 
   // Home Page
 
@@ -65,6 +66,7 @@ abstract class _FarmNoteStore with Store {
     );
 
     _items.add(newCattle);
+    notifyListeners();
     DbUtil.insert(
       'cattle',
       {
@@ -82,22 +84,19 @@ abstract class _FarmNoteStore with Store {
   // Form
 
   @observable
-  var weightFocus = FocusNode();
+  var nameController = TextEditingController();
   @observable
   var weightController = TextEditingController();
+
+  @observable
+  var weightFocus = FocusNode();
   @observable
   var descriptionFocus = FocusNode();
   @observable
   var imageUrlFocus = FocusNode();
-  @observable
-  var imageUrlController = TextEditingController();
-  @observable
-  var formKey = GlobalKey<FormState>();
-  @observable
-  var formData = <String, Object>{};
 
   @observable
-  var nameController = TextEditingController();
+  var formData = <String, Object>{};
 
   @observable
   var weightArroba = 0.0;
@@ -114,8 +113,8 @@ abstract class _FarmNoteStore with Store {
       pickedImage!,
       description,
       grothRate,
-      weightKg,
       weightArroba,
+      weightKg,
     );
     Navigator.of(context).pop();
   }
@@ -137,10 +136,10 @@ abstract class _FarmNoteStore with Store {
   File? storedImage;
 
   @action
-  takePicture() async {
+  takePicture(ImageSource origin) async {
     final ImagePicker _picker = ImagePicker();
     XFile imageFile = await _picker.pickImage(
-      source: ImageSource.camera,
+      source: origin,
       maxWidth: 600,
     ) as XFile;
 

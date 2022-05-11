@@ -32,24 +32,22 @@ class HomePage extends StatelessWidget {
                 child: const Center(
                   child: Text('Nenhum gado cadastrado'),
                 ),
-                builder: (ctx, store, child) =>
-                    store.itemsCount == 0
-                        ? child!
-                        : Observer(
-                          builder: (_) => GridView.builder(
-      padding: const EdgeInsets.all(10),
-      itemCount: store.itemsCount,
-      itemBuilder: (ctx, i) => ChangeNotifierProvider.value(
-        value: store.items[i],
-        child: const CattleGridItem(),
-      ),
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 1,
-        childAspectRatio: 3 / 2,
-        mainAxisSpacing: 10,
-      ),
-    ),
+                builder: (ctx, store, child) => store.itemsCount == 0
+                    ? child!
+                    : GridView.builder(
+                        padding: const EdgeInsets.all(10),
+                        itemCount: store.itemsCount,
+                        itemBuilder: (ctx, i) => ChangeNotifierProvider.value(
+                          value: store.items[i],
+                          child: const CattleGridItem(),
                         ),
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 1,
+                          childAspectRatio: 3 / 2,
+                          mainAxisSpacing: 10,
+                        ),
+                      ),
               ),
       ),
     );

@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 import 'store/farmnote.store.dart';
 
 void main() {
+  Provider.debugCheckInvalidValueType = null;
   runApp(const MyApp());
 }
 
@@ -21,7 +22,7 @@ class MyApp extends StatelessWidget {
       providers: [
         Provider<FarmNoteStore>(
           create: (_) => FarmNoteStore(),
-        )
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

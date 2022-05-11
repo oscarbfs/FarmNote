@@ -24,18 +24,18 @@ mixin _$FarmNoteStore on _FarmNoteStore, Store {
     });
   }
 
-  final _$weightFocusAtom = Atom(name: '_FarmNoteStore.weightFocus');
+  final _$nameControllerAtom = Atom(name: '_FarmNoteStore.nameController');
 
   @override
-  FocusNode get weightFocus {
-    _$weightFocusAtom.reportRead();
-    return super.weightFocus;
+  TextEditingController get nameController {
+    _$nameControllerAtom.reportRead();
+    return super.nameController;
   }
 
   @override
-  set weightFocus(FocusNode value) {
-    _$weightFocusAtom.reportWrite(value, super.weightFocus, () {
-      super.weightFocus = value;
+  set nameController(TextEditingController value) {
+    _$nameControllerAtom.reportWrite(value, super.nameController, () {
+      super.nameController = value;
     });
   }
 
@@ -51,6 +51,21 @@ mixin _$FarmNoteStore on _FarmNoteStore, Store {
   set weightController(TextEditingController value) {
     _$weightControllerAtom.reportWrite(value, super.weightController, () {
       super.weightController = value;
+    });
+  }
+
+  final _$weightFocusAtom = Atom(name: '_FarmNoteStore.weightFocus');
+
+  @override
+  FocusNode get weightFocus {
+    _$weightFocusAtom.reportRead();
+    return super.weightFocus;
+  }
+
+  @override
+  set weightFocus(FocusNode value) {
+    _$weightFocusAtom.reportWrite(value, super.weightFocus, () {
+      super.weightFocus = value;
     });
   }
 
@@ -84,37 +99,6 @@ mixin _$FarmNoteStore on _FarmNoteStore, Store {
     });
   }
 
-  final _$imageUrlControllerAtom =
-      Atom(name: '_FarmNoteStore.imageUrlController');
-
-  @override
-  TextEditingController get imageUrlController {
-    _$imageUrlControllerAtom.reportRead();
-    return super.imageUrlController;
-  }
-
-  @override
-  set imageUrlController(TextEditingController value) {
-    _$imageUrlControllerAtom.reportWrite(value, super.imageUrlController, () {
-      super.imageUrlController = value;
-    });
-  }
-
-  final _$formKeyAtom = Atom(name: '_FarmNoteStore.formKey');
-
-  @override
-  GlobalKey<FormState> get formKey {
-    _$formKeyAtom.reportRead();
-    return super.formKey;
-  }
-
-  @override
-  set formKey(GlobalKey<FormState> value) {
-    _$formKeyAtom.reportWrite(value, super.formKey, () {
-      super.formKey = value;
-    });
-  }
-
   final _$formDataAtom = Atom(name: '_FarmNoteStore.formData');
 
   @override
@@ -127,21 +111,6 @@ mixin _$FarmNoteStore on _FarmNoteStore, Store {
   set formData(Map<String, Object> value) {
     _$formDataAtom.reportWrite(value, super.formData, () {
       super.formData = value;
-    });
-  }
-
-  final _$nameControllerAtom = Atom(name: '_FarmNoteStore.nameController');
-
-  @override
-  TextEditingController get nameController {
-    _$nameControllerAtom.reportRead();
-    return super.nameController;
-  }
-
-  @override
-  set nameController(TextEditingController value) {
-    _$nameControllerAtom.reportWrite(value, super.nameController, () {
-      super.nameController = value;
     });
   }
 
@@ -209,8 +178,8 @@ mixin _$FarmNoteStore on _FarmNoteStore, Store {
   final _$takePictureAsyncAction = AsyncAction('_FarmNoteStore.takePicture');
 
   @override
-  Future takePicture() {
-    return _$takePictureAsyncAction.run(() => super.takePicture());
+  Future takePicture(ImageSource origin) {
+    return _$takePictureAsyncAction.run(() => super.takePicture(origin));
   }
 
   final _$_FarmNoteStoreActionController =
@@ -265,14 +234,12 @@ mixin _$FarmNoteStore on _FarmNoteStore, Store {
   @override
   String toString() {
     return '''
-weightFocus: ${weightFocus},
+nameController: ${nameController},
 weightController: ${weightController},
+weightFocus: ${weightFocus},
 descriptionFocus: ${descriptionFocus},
 imageUrlFocus: ${imageUrlFocus},
-imageUrlController: ${imageUrlController},
-formKey: ${formKey},
 formData: ${formData},
-nameController: ${nameController},
 weightArroba: ${weightArroba},
 pickedImage: ${pickedImage},
 storedImage: ${storedImage}

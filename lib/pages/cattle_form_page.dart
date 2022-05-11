@@ -26,7 +26,7 @@ class CattleFormPage extends StatelessWidget {
                     children: <Widget>[
                       TextFormField(
                         controller: store.nameController,
-                        initialValue: store.formData['name']?.toString(),
+                        // initialValue: store.formData['name']?.toString(),
                         decoration: const InputDecoration(labelText: 'Nome'),
                         textInputAction: TextInputAction.next,
                         onFieldSubmitted: (_) {
@@ -34,6 +34,7 @@ class CattleFormPage extends StatelessWidget {
                               .requestFocus(store.weightFocus);
                         },
                         onSaved: (name) => store.formData['name'] = name ?? '',
+                        onChanged: (name) => store.formData['name'] = name,
                         validator: (_name) {
                           final name = _name ?? '';
 
@@ -64,15 +65,13 @@ class CattleFormPage extends StatelessWidget {
                                   const TextInputType.numberWithOptions(
                                 decimal: true,
                               ),
-                              onSaved: (weight) {
-                                store.formData['weightKg'] =
-                                    double.parse(weight ?? '0');
-                                store.formData['weightArroba'] =
-                                    double.parse(weight ?? '0') / 30;
-                                store.formData['growthRate'] = 0.0;
-                              },
                               onChanged: (weight) {
                                 store.weightArroba = weight == "" ? 0 / 30 : double.parse(weight) / 30;
+                                store.formData['weightKg'] =
+                                    double.parse(weight);
+                                store.formData['weightArroba'] =
+                                    double.parse(weight) / 30;
+                                store.formData['growthRate'] = 0.0;
                               },
                             ),
                           ),
@@ -90,8 +89,8 @@ class CattleFormPage extends StatelessWidget {
                         focusNode: store.descriptionFocus,
                         keyboardType: TextInputType.multiline,
                         maxLines: 3,
-                        onSaved: (description) =>
-                            store.formData['description'] = description ?? '',
+                        onChanged: (description) =>
+                            store.formData['description'] = description,
                       ),
                       const SizedBox(height: 10),
                       ImageInput(),
