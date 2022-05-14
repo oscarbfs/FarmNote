@@ -1,23 +1,21 @@
 import 'package:farm_note/components/image_input.dart';
+import 'package:farm_note/models/cattle.dart';
 import 'package:farm_note/store/farmnote.store.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 
-class CattleFormPage extends StatelessWidget {
-  const CattleFormPage({Key? key}) : super(key: key);
+class EditScreen extends StatelessWidget {
+  const EditScreen({ Key? key }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final store = Provider.of<FarmNoteStore>(context);
-    store.storedImage = null;
-    store.weightArroba = 0.0;
-
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Novo Lugar'),
-      ),
-      body: Observer(
+    store.cattleArguments(context);
+    store.weightArroba = store.cattle!.weightArroba;
+    store.nameForm = store.cattle!.name;
+    store.pickedImage = store.cattle!.image;
+    return Observer(
         builder: (_) => Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -28,7 +26,7 @@ class CattleFormPage extends StatelessWidget {
                   child: Column(
                     children: <Widget>[
                       TextFormField(
-                        // controller: store.nameController,
+                        initialValue: store.nameForm,
                         decoration: const InputDecoration(labelText: 'Nome'),
                         textInputAction: TextInputAction.next,
                         onFieldSubmitted: (_) {
@@ -57,11 +55,12 @@ class CattleFormPage extends StatelessWidget {
                         children: [
                           Expanded(
                             child: TextFormField(
-                              // controller: store.weightController,
                               decoration:
                                   const InputDecoration(labelText: 'Peso(Kg)'),
+                              initialValue: store.cattle!.weightKg.toString(),
                               textInputAction: TextInputAction.next,
                               focusNode: store.weightFocus,
+                              // controller: store.weightController,
                               onFieldSubmitted: (_) {
                                 FocusScope.of(context)
                                     .requestFocus(store.descriptionFocus);
@@ -88,6 +87,7 @@ class CattleFormPage extends StatelessWidget {
                         ],
                       ),
                       TextFormField(
+                        initialValue: store.cattle!.description,
                         decoration:
                             const InputDecoration(labelText: 'Descrição'),
                         focusNode: store.descriptionFocus,
@@ -104,8 +104,8 @@ class CattleFormPage extends StatelessWidget {
               ),
             ),
             ElevatedButton.icon(
-                icon: const Icon(Icons.add),
-                label: const Text('Adicionar'),
+                icon: const Icon(Icons.edit),
+                label: const Text('Editar'),
                 style: ElevatedButton.styleFrom(
                   onPrimary: Colors.white,
                   primary: Theme.of(context).colorScheme.primary,
@@ -129,7 +129,6 @@ class CattleFormPage extends StatelessWidget {
                     : null),
           ],
         ),
-      ),
-    );
+      );
   }
 }

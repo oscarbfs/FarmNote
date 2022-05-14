@@ -24,36 +24,6 @@ mixin _$FarmNoteStore on _FarmNoteStore, Store {
     });
   }
 
-  final _$nameControllerAtom = Atom(name: '_FarmNoteStore.nameController');
-
-  @override
-  TextEditingController get nameController {
-    _$nameControllerAtom.reportRead();
-    return super.nameController;
-  }
-
-  @override
-  set nameController(TextEditingController value) {
-    _$nameControllerAtom.reportWrite(value, super.nameController, () {
-      super.nameController = value;
-    });
-  }
-
-  final _$weightControllerAtom = Atom(name: '_FarmNoteStore.weightController');
-
-  @override
-  TextEditingController get weightController {
-    _$weightControllerAtom.reportRead();
-    return super.weightController;
-  }
-
-  @override
-  set weightController(TextEditingController value) {
-    _$weightControllerAtom.reportWrite(value, super.weightController, () {
-      super.weightController = value;
-    });
-  }
-
   final _$weightFocusAtom = Atom(name: '_FarmNoteStore.weightFocus');
 
   @override
@@ -114,6 +84,21 @@ mixin _$FarmNoteStore on _FarmNoteStore, Store {
     });
   }
 
+  final _$nameFormAtom = Atom(name: '_FarmNoteStore.nameForm');
+
+  @override
+  dynamic get nameForm {
+    _$nameFormAtom.reportRead();
+    return super.nameForm;
+  }
+
+  @override
+  set nameForm(dynamic value) {
+    _$nameFormAtom.reportWrite(value, super.nameForm, () {
+      super.nameForm = value;
+    });
+  }
+
   final _$weightArrobaAtom = Atom(name: '_FarmNoteStore.weightArroba');
 
   @override
@@ -159,6 +144,67 @@ mixin _$FarmNoteStore on _FarmNoteStore, Store {
     });
   }
 
+  final _$selectedScreenIndexAtom =
+      Atom(name: '_FarmNoteStore.selectedScreenIndex');
+
+  @override
+  int get selectedScreenIndex {
+    _$selectedScreenIndexAtom.reportRead();
+    return super.selectedScreenIndex;
+  }
+
+  @override
+  set selectedScreenIndex(int value) {
+    _$selectedScreenIndexAtom.reportWrite(value, super.selectedScreenIndex, () {
+      super.selectedScreenIndex = value;
+    });
+  }
+
+  final _$titlesAtom = Atom(name: '_FarmNoteStore.titles');
+
+  @override
+  List<String> get titles {
+    _$titlesAtom.reportRead();
+    return super.titles;
+  }
+
+  @override
+  set titles(List<String> value) {
+    _$titlesAtom.reportWrite(value, super.titles, () {
+      super.titles = value;
+    });
+  }
+
+  final _$screensAtom = Atom(name: '_FarmNoteStore.screens');
+
+  @override
+  List<Widget> get screens {
+    _$screensAtom.reportRead();
+    return super.screens;
+  }
+
+  @override
+  set screens(List<Widget> value) {
+    _$screensAtom.reportWrite(value, super.screens, () {
+      super.screens = value;
+    });
+  }
+
+  final _$cattleAtom = Atom(name: '_FarmNoteStore.cattle');
+
+  @override
+  Cattle? get cattle {
+    _$cattleAtom.reportRead();
+    return super.cattle;
+  }
+
+  @override
+  set cattle(Cattle? value) {
+    _$cattleAtom.reportWrite(value, super.cattle, () {
+      super.cattle = value;
+    });
+  }
+
   final _$loadCattleAsyncAction = AsyncAction('_FarmNoteStore.loadCattle');
 
   @override
@@ -175,11 +221,44 @@ mixin _$FarmNoteStore on _FarmNoteStore, Store {
         name, image, description, growthRate, weightArroba, weightKg));
   }
 
+  final _$editCattleAsyncAction = AsyncAction('_FarmNoteStore.editCattle');
+
+  @override
+  Future<void> editCattle(String name, File image, String description,
+      double growthRate, double weightArroba, double weightKg) {
+    return _$editCattleAsyncAction.run(() => super.editCattle(
+        name, image, description, growthRate, weightArroba, weightKg));
+  }
+
+  final _$updateCattleAsyncAction = AsyncAction('_FarmNoteStore.updateCattle');
+
+  @override
+  Future<void> updateCattle(String name, File image, String description,
+      double growthRate, double weightArroba, double weightKg) {
+    return _$updateCattleAsyncAction.run(() => super.updateCattle(
+        name, image, description, growthRate, weightArroba, weightKg));
+  }
+
   final _$takePictureAsyncAction = AsyncAction('_FarmNoteStore.takePicture');
 
   @override
   Future takePicture(ImageSource origin) {
     return _$takePictureAsyncAction.run(() => super.takePicture(origin));
+  }
+
+  final _$deleteCattleAsyncAction = AsyncAction('_FarmNoteStore.deleteCattle');
+
+  @override
+  Future<void> deleteCattle(
+      String id,
+      String name,
+      File image,
+      String description,
+      double growthRate,
+      double weightArroba,
+      double weightKg) {
+    return _$deleteCattleAsyncAction.run(() => super.deleteCattle(
+        id, name, image, description, growthRate, weightArroba, weightKg));
   }
 
   final _$_FarmNoteStoreActionController =
@@ -232,17 +311,31 @@ mixin _$FarmNoteStore on _FarmNoteStore, Store {
   }
 
   @override
+  dynamic selectScreen(int index) {
+    final _$actionInfo = _$_FarmNoteStoreActionController.startAction(
+        name: '_FarmNoteStore.selectScreen');
+    try {
+      return super.selectScreen(index);
+    } finally {
+      _$_FarmNoteStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
-nameController: ${nameController},
-weightController: ${weightController},
 weightFocus: ${weightFocus},
 descriptionFocus: ${descriptionFocus},
 imageUrlFocus: ${imageUrlFocus},
 formData: ${formData},
+nameForm: ${nameForm},
 weightArroba: ${weightArroba},
 pickedImage: ${pickedImage},
-storedImage: ${storedImage}
+storedImage: ${storedImage},
+selectedScreenIndex: ${selectedScreenIndex},
+titles: ${titles},
+screens: ${screens},
+cattle: ${cattle}
     ''';
   }
 }

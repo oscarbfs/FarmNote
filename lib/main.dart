@@ -1,4 +1,4 @@
-import 'package:farm_note/pages/cattle_detail_page.dart';
+import 'package:farm_note/pages/cattle_item_page.dart';
 import 'package:farm_note/pages/cattle_form_page.dart';
 import 'package:farm_note/pages/home_page.dart';
 import 'package:farm_note/utils/app_routes.dart';
@@ -18,12 +18,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ThemeData tema = ThemeData();
-    return MultiProvider(
-      providers: [
-        Provider<FarmNoteStore>(
-          create: (_) => FarmNoteStore(),
-        ),
-      ],
+    return ChangeNotifierProvider(
+      create: (ctx) => FarmNoteStore(),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'FarmNote',

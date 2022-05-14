@@ -28,7 +28,16 @@ class DbUtil {
     await db.update(
       table,
       data,
+      where: "id = ${data["id"].toString()}",
       conflictAlgorithm: sql.ConflictAlgorithm.replace,
+    );
+  }
+
+  static Future<void> delete(String table, Map<String, Object> data) async {
+    final db = await DbUtil.database();
+    await db.delete(
+      table,
+      where: "id = ${data["id"].toString()}",
     );
   }
 
