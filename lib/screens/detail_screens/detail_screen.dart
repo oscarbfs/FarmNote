@@ -14,7 +14,7 @@ class DetailScreen extends StatelessWidget {
     return SingleChildScrollView(
           child: Column(
             children: [
-              Container(
+              SizedBox(
                 height: 230,
                 width: 450,
                 child: Image.file(

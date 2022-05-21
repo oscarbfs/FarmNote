@@ -2,16 +2,13 @@ import 'dart:io';
 import 'dart:math';
 
 import 'package:farm_note/models/cattle.dart';
-import 'package:farm_note/pages/cattle_form_page.dart';
 import 'package:farm_note/screens/detail_screens/detail_screen.dart';
 import 'package:farm_note/screens/detail_screens/edit_screen.dart';
 import 'package:farm_note/screens/detail_screens/update_screen.dart';
 import 'package:farm_note/utils/data_base.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mobx/mobx.dart';
-import 'package:provider/provider.dart';
 import 'package:path_provider/path_provider.dart' as syspaths;
 import 'package:path/path.dart' as path;
 
@@ -84,6 +81,7 @@ abstract class _FarmNoteStore with Store, ChangeNotifier {
     );
     notifyListeners();
   }
+
   @action
   Future<void> editCattle(String name, File image, String description,
       double growthRate, double weightArroba, double weightKg) async {
@@ -112,26 +110,34 @@ abstract class _FarmNoteStore with Store, ChangeNotifier {
     );
     notifyListeners();
   }
+
   @action
-  Future<void> updateCattle(String name, File image, String description,
-      double growthRate, double weightArroba, double weightKg) async {
-    final newCattle = Cattle(
-      id: Random().nextDouble().toString(),
+  Future<void> updateCattle(
+      String id,
+      String name,
+      File image,
+      String description,
+      double growthRate,
+      double weightArroba,
+      double weightKg) async {
+    _items[_items.indexWhere((element) {
+      return element.id == id;
+    })] = Cattle(
+      id: id,
       name: name,
-      image: image,
       description: description,
-      growthRate: growthRate,
-      weightArroba: weightArroba,
       weightKg: weightKg,
+      weightArroba: weightArroba,
+      image: image,
+      growthRate: growthRate,
     );
 
-    _items.add(newCattle);
-    DbUtil.insert(
+    DbUtil.update(
       'cattle',
       {
-        'id': newCattle.id,
-        'name': newCattle.name,
-        'image': newCattle.image.path,
+        'id': id,
+        'name': name,
+        'image': image.path,
         'description': description,
         'growthRate': growthRate,
         'weightArroba': weightArroba,
@@ -149,6 +155,9 @@ abstract class _FarmNoteStore with Store, ChangeNotifier {
   // var weightController = TextEditingController();
 
   @observable
+  var formKey = GlobalKey<FormState>();
+
+  @observable
   var weightFocus = FocusNode();
   @observable
   var descriptionFocus = FocusNode();
@@ -161,41 +170,79 @@ abstract class _FarmNoteStore with Store, ChangeNotifier {
   @observable
   var nameForm;
   @observable
-  var weightArroba = 0.0;
-
+  var description;
   @observable
-  File? pickedImage;
+  var weightArroba = 0.0;
+  @observable
+  var growthRate = 0.0;
 
-  @action
-  void submitForm(BuildContext context, String description, double weightKg,
-      double weightArroba, double grothRate) {
-    if (!isValidForm()) return;
-
-    addCattle(
-      nameForm,
-      pickedImage!,
-      description,
-      grothRate,
-      weightArroba,
-      weightKg,
-    );
-    Navigator.of(context).pop();
-  }
-
-  @action
-  void selectImage(File image) {
-    pickedImage = image;
-  }
+  // @observable
+  // File? pickedImage;
 
   @action
   bool isValidForm() {
-    return nameForm != null  && pickedImage != null;
+    return nameForm != null && nameForm != "" && storedImage != null;
+  }
+
+  @action
+  void submitForm(BuildContext context, String id, String description,
+      double weightKg, double weightArroba, double growthRate) {
+
+    final isValid = formKey.currentState?.validate() ?? false;
+
+    if (!isValid) return;
+
+    formKey.currentState?.save();
+
+    try {
+      if (id == "") {
+        addCattle(
+          nameForm,
+          storedImage,
+          description,
+          growthRate,
+          weightArroba,
+          weightKg,
+        );
+      } else {
+        updateCattle(
+          id,
+          nameForm,
+          storedImage,
+          description,
+          growthRate,
+          weightArroba,
+          weightKg,
+        );
+      }
+    } catch (e) {
+      showDialog<void>(
+        context: context,
+        builder: (ctx) => AlertDialog(
+          title: const Text('Ocorreu um erro!'),
+          content: const Text('Ocorreu um erro para salvar o Boi.'),
+          actions: [
+            TextButton(
+              child: const Text('Ok'),
+              onPressed: () => Navigator.of(context).pop(),
+            ),
+          ],
+        ),
+      );
+    }
+
+    Navigator.of(context).pop();
   }
 
   // Image Input
 
   @observable
-  File? storedImage;
+  File storedImage = File("assets/images/SemBoi.jpg");
+
+  @action
+  void selectImage(File image) {
+    storedImage = image;
+  }
 
   @action
   takePicture(ImageSource origin) async {
@@ -208,8 +255,8 @@ abstract class _FarmNoteStore with Store, ChangeNotifier {
     storedImage = File(imageFile.path);
 
     final appDir = await syspaths.getApplicationDocumentsDirectory();
-    String fileName = path.basename(storedImage!.path);
-    final savedImage = await storedImage!.copy('${appDir.path}/$fileName');
+    String fileName = path.basename(storedImage.path);
+    final savedImage = await storedImage.copy('${appDir.path}/$fileName');
 
     selectImage(savedImage);
   }
@@ -239,25 +286,18 @@ abstract class _FarmNoteStore with Store, ChangeNotifier {
   }
 
   @action
-  Future<void> deleteCattle(
-      String id,
-      String name,
-      File image,
-      String description,
-      double growthRate,
-      double weightArroba,
-      double weightKg) async {
-    // _items.add(newCattle);
-    DbUtil.insert(
+  Future<void> deleteCattle(Cattle cattle) async {
+    _items.remove(cattle);
+    DbUtil.delete(
       'cattle',
       {
-        'id': id,
-        'name': name,
-        'image': image,
-        'description': description,
-        'growthRate': growthRate,
-        'weightArroba': weightArroba,
-        'weightKg': weightKg,
+        'id': cattle.id,
+        'name': cattle.name,
+        'image': cattle.image,
+        'description': cattle.description,
+        'growthRate': cattle.growthRate,
+        'weightArroba': cattle.weightArroba,
+        'weightKg': cattle.weightKg,
       },
     );
     notifyListeners();

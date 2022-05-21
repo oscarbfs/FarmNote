@@ -24,6 +24,21 @@ mixin _$FarmNoteStore on _FarmNoteStore, Store {
     });
   }
 
+  final _$formKeyAtom = Atom(name: '_FarmNoteStore.formKey');
+
+  @override
+  GlobalKey<FormState> get formKey {
+    _$formKeyAtom.reportRead();
+    return super.formKey;
+  }
+
+  @override
+  set formKey(GlobalKey<FormState> value) {
+    _$formKeyAtom.reportWrite(value, super.formKey, () {
+      super.formKey = value;
+    });
+  }
+
   final _$weightFocusAtom = Atom(name: '_FarmNoteStore.weightFocus');
 
   @override
@@ -99,6 +114,21 @@ mixin _$FarmNoteStore on _FarmNoteStore, Store {
     });
   }
 
+  final _$descriptionAtom = Atom(name: '_FarmNoteStore.description');
+
+  @override
+  dynamic get description {
+    _$descriptionAtom.reportRead();
+    return super.description;
+  }
+
+  @override
+  set description(dynamic value) {
+    _$descriptionAtom.reportWrite(value, super.description, () {
+      super.description = value;
+    });
+  }
+
   final _$weightArrobaAtom = Atom(name: '_FarmNoteStore.weightArroba');
 
   @override
@@ -114,31 +144,31 @@ mixin _$FarmNoteStore on _FarmNoteStore, Store {
     });
   }
 
-  final _$pickedImageAtom = Atom(name: '_FarmNoteStore.pickedImage');
+  final _$growthRateAtom = Atom(name: '_FarmNoteStore.growthRate');
 
   @override
-  File? get pickedImage {
-    _$pickedImageAtom.reportRead();
-    return super.pickedImage;
+  double get growthRate {
+    _$growthRateAtom.reportRead();
+    return super.growthRate;
   }
 
   @override
-  set pickedImage(File? value) {
-    _$pickedImageAtom.reportWrite(value, super.pickedImage, () {
-      super.pickedImage = value;
+  set growthRate(double value) {
+    _$growthRateAtom.reportWrite(value, super.growthRate, () {
+      super.growthRate = value;
     });
   }
 
   final _$storedImageAtom = Atom(name: '_FarmNoteStore.storedImage');
 
   @override
-  File? get storedImage {
+  File get storedImage {
     _$storedImageAtom.reportRead();
     return super.storedImage;
   }
 
   @override
-  set storedImage(File? value) {
+  set storedImage(File value) {
     _$storedImageAtom.reportWrite(value, super.storedImage, () {
       super.storedImage = value;
     });
@@ -233,10 +263,16 @@ mixin _$FarmNoteStore on _FarmNoteStore, Store {
   final _$updateCattleAsyncAction = AsyncAction('_FarmNoteStore.updateCattle');
 
   @override
-  Future<void> updateCattle(String name, File image, String description,
-      double growthRate, double weightArroba, double weightKg) {
+  Future<void> updateCattle(
+      String id,
+      String name,
+      File image,
+      String description,
+      double growthRate,
+      double weightArroba,
+      double weightKg) {
     return _$updateCattleAsyncAction.run(() => super.updateCattle(
-        name, image, description, growthRate, weightArroba, weightKg));
+        id, name, image, description, growthRate, weightArroba, weightKg));
   }
 
   final _$takePictureAsyncAction = AsyncAction('_FarmNoteStore.takePicture');
@@ -249,16 +285,8 @@ mixin _$FarmNoteStore on _FarmNoteStore, Store {
   final _$deleteCattleAsyncAction = AsyncAction('_FarmNoteStore.deleteCattle');
 
   @override
-  Future<void> deleteCattle(
-      String id,
-      String name,
-      File image,
-      String description,
-      double growthRate,
-      double weightArroba,
-      double weightKg) {
-    return _$deleteCattleAsyncAction.run(() => super.deleteCattle(
-        id, name, image, description, growthRate, weightArroba, weightKg));
+  Future<void> deleteCattle(Cattle cattle) {
+    return _$deleteCattleAsyncAction.run(() => super.deleteCattle(cattle));
   }
 
   final _$_FarmNoteStoreActionController =
@@ -276,13 +304,24 @@ mixin _$FarmNoteStore on _FarmNoteStore, Store {
   }
 
   @override
-  void submitForm(BuildContext context, String description, double weightKg,
-      double weightArroba, double grothRate) {
+  bool isValidForm() {
+    final _$actionInfo = _$_FarmNoteStoreActionController.startAction(
+        name: '_FarmNoteStore.isValidForm');
+    try {
+      return super.isValidForm();
+    } finally {
+      _$_FarmNoteStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void submitForm(BuildContext context, String id, String description,
+      double weightKg, double weightArroba, double growthRate) {
     final _$actionInfo = _$_FarmNoteStoreActionController.startAction(
         name: '_FarmNoteStore.submitForm');
     try {
-      return super
-          .submitForm(context, description, weightKg, weightArroba, grothRate);
+      return super.submitForm(
+          context, id, description, weightKg, weightArroba, growthRate);
     } finally {
       _$_FarmNoteStoreActionController.endAction(_$actionInfo);
     }
@@ -294,17 +333,6 @@ mixin _$FarmNoteStore on _FarmNoteStore, Store {
         name: '_FarmNoteStore.selectImage');
     try {
       return super.selectImage(image);
-    } finally {
-      _$_FarmNoteStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  bool isValidForm() {
-    final _$actionInfo = _$_FarmNoteStoreActionController.startAction(
-        name: '_FarmNoteStore.isValidForm');
-    try {
-      return super.isValidForm();
     } finally {
       _$_FarmNoteStoreActionController.endAction(_$actionInfo);
     }
@@ -324,13 +352,15 @@ mixin _$FarmNoteStore on _FarmNoteStore, Store {
   @override
   String toString() {
     return '''
+formKey: ${formKey},
 weightFocus: ${weightFocus},
 descriptionFocus: ${descriptionFocus},
 imageUrlFocus: ${imageUrlFocus},
 formData: ${formData},
 nameForm: ${nameForm},
+description: ${description},
 weightArroba: ${weightArroba},
-pickedImage: ${pickedImage},
+growthRate: ${growthRate},
 storedImage: ${storedImage},
 selectedScreenIndex: ${selectedScreenIndex},
 titles: ${titles},

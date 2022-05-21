@@ -19,13 +19,11 @@ class ImageInput extends StatelessWidget {
               border: Border.all(width: 1, color: Colors.grey),
             ),
             alignment: Alignment.center,
-            child: store.storedImage != null
-                ? Image.file(
-                    store.storedImage!,
+            child: Image.asset(
+                    "assets/images/SemBoi.jpg",
                     width: double.infinity,
                     fit: BoxFit.cover,
-                  )
-                : const Text('Nenhuma imagem!'),
+                  ),
           ),
           const SizedBox(height: 10),
           Expanded(

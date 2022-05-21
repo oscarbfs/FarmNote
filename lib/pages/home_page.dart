@@ -2,7 +2,6 @@ import 'package:farm_note/components/cattle_grid_item.dart';
 import 'package:farm_note/store/farmnote.store.dart';
 import 'package:flutter/material.dart';
 import 'package:farm_note/utils/app_routes.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 
 class HomePage extends StatelessWidget {
@@ -16,7 +15,7 @@ class HomePage extends StatelessWidget {
         title: const Text('Meu Gado'),
         actions: [
           IconButton(
-            icon: Icon(Icons.add),
+            icon: const Icon(Icons.add),
             onPressed: () {
               Navigator.of(context).pushNamed(AppRoutes.CATTLE_FORM);
             },

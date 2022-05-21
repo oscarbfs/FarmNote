@@ -28,7 +28,8 @@ class DbUtil {
     await db.update(
       table,
       data,
-      where: "id = ${data["id"].toString()}",
+      where: "id = ?",
+      whereArgs: [data["id"]],
       conflictAlgorithm: sql.ConflictAlgorithm.replace,
     );
   }
@@ -37,7 +38,8 @@ class DbUtil {
     final db = await DbUtil.database();
     await db.delete(
       table,
-      where: "id = ${data["id"].toString()}",
+      where: "id = ?",
+      whereArgs: [data["id"]],
     );
   }
 
