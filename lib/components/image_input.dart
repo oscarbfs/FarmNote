@@ -18,11 +18,14 @@ class ImageInput extends StatelessWidget {
               border: Border.all(width: 1, color: Colors.grey),
             ),
             alignment: Alignment.center,
-            child: Image.file(
-              store.storedImage,
-              width: double.infinity,
-              fit: BoxFit.cover,
+            child: Container(
+            decoration: BoxDecoration(
+              color: Colors.green,
+              image: DecorationImage(
+                image: store.getCattleImageProvider(store.storedImage.path), // <-- Expecting ImageProvider
+              ),
             ),
+          ),
           ),
           const SizedBox(height: 10),
           Expanded(

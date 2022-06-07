@@ -1,4 +1,5 @@
 import 'package:farm_note/models/cattle.dart';
+import 'package:farm_note/store/farmnote.store.dart';
 import 'package:farm_note/utils/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -9,15 +10,24 @@ class CattleGridItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cattle = Provider.of<Cattle>(context, listen: false);
+    final store = Provider.of<FarmNoteStore>(context);
 
     return ClipRRect(
       borderRadius: BorderRadius.circular(10),
       child: GridTile(
         child: GestureDetector(
-          child: Image.file(
-            cattle.image,
-            fit: BoxFit.cover,
+          child: Container(
+            decoration: BoxDecoration(
+              color: Colors.green,
+              image: DecorationImage(
+                image: store.getCattleImageProvider(cattle.image), // <-- Expecting ImageProvider
+              ),
+            ),
           ),
+          // Image.file(
+          //   cattle.image,
+          //   fit: BoxFit.cover,
+          // ),
           onTap: () {
             Navigator.of(context).pushNamed(
               AppRoutes.CATTLE_DETAIL,

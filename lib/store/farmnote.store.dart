@@ -30,7 +30,7 @@ abstract class _FarmNoteStore with Store, ChangeNotifier {
           (item) => Cattle(
             id: item['id'],
             name: item['name'],
-            image: File(item['image']),
+            image: item['image'],
             description: item['description'],
             growthRate: item['growthRate'],
             weightKg: item['weightKg'],
@@ -59,7 +59,7 @@ abstract class _FarmNoteStore with Store, ChangeNotifier {
     final newCattle = Cattle(
       id: Random().nextDouble().toString(),
       name: name,
-      image: image,
+      image: image.path,
       description: description,
       growthRate: growthRate,
       weightArroba: weightArroba,
@@ -72,7 +72,7 @@ abstract class _FarmNoteStore with Store, ChangeNotifier {
       {
         'id': newCattle.id,
         'name': newCattle.name,
-        'image': newCattle.image.path,
+        'image': newCattle.image,
         'description': description,
         'growthRate': growthRate,
         'weightArroba': weightArroba,
@@ -99,7 +99,7 @@ abstract class _FarmNoteStore with Store, ChangeNotifier {
       description: description,
       weightKg: weightKg,
       weightArroba: weightArroba,
-      image: image,
+      image: image.path,
       growthRate: growthRate,
     );
 
@@ -207,22 +207,24 @@ abstract class _FarmNoteStore with Store, ChangeNotifier {
   // Image Input
 
   static const defaultUImage = 'assets/images/SemBoi.png';
-  // ImageProvider provider = FileImage(File(Uri.parse(defaultUImage).toString()));
+
+  ImageProvider getCattleImageProvider(String image) {
+    ImageProvider? provider;
+    final uri = Uri.parse(image);
+
+    if (uri.path.contains(defaultUImage)) {
+      provider = const AssetImage(defaultUImage);
+    } else if (uri.scheme.contains('http')) {
+      provider = NetworkImage(uri.toString());
+    } else {
+      provider = FileImage(File(uri.toString()));
+    }
+
+    return  provider;
+  }
   
   @observable
   File storedImage = File(Uri.parse(defaultUImage).toString());
-
-  // File takeImage(image) {
-
-  //   if (uri.path.contains(_defaultUImage)) {
-  //     provider = const AssetImage(_defaultUImage);
-  //   } else {
-  //     provider = FileImage(File(uri.toString()));
-  //   }
-
-  //   storedImage = File(provider.toString());
-  //   return storedImage;
-  // }
 
   @action
   void selectImage(File image) {

@@ -14,7 +14,7 @@ class UpdateScreen extends StatelessWidget {
     store.weightArroba = store.cattle!.weightArroba;
     store.growthRate = store.cattle!.growthRate;
     // store.nameForm = store.cattle!.name;
-    store.storedImage = store.cattle!.image;
+    // store.storedImage = store.cattle!.image;
     // store.description = store.cattle!.description;
     return Observer(
       builder: (_) => Column(

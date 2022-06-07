@@ -8,7 +8,7 @@ class Cattle with ChangeNotifier{
   final String description;
   final double weightKg;
   final double weightArroba;
-  final File image;
+  final String image;
   final double growthRate;
 
   Cattle({
