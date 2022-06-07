@@ -83,35 +83,6 @@ abstract class _FarmNoteStore with Store, ChangeNotifier {
   }
 
   @action
-  Future<void> editCattle(String name, File image, String description,
-      double growthRate, double weightArroba, double weightKg) async {
-    final newCattle = Cattle(
-      id: Random().nextDouble().toString(),
-      name: name,
-      image: image,
-      description: description,
-      growthRate: growthRate,
-      weightArroba: weightArroba,
-      weightKg: weightKg,
-    );
-
-    _items.add(newCattle);
-    DbUtil.insert(
-      'cattle',
-      {
-        'id': newCattle.id,
-        'name': newCattle.name,
-        'image': newCattle.image.path,
-        'description': description,
-        'growthRate': growthRate,
-        'weightArroba': weightArroba,
-        'weightKg': weightKg,
-      },
-    );
-    notifyListeners();
-  }
-
-  @action
   Future<void> updateCattle(
       String id,
       String name,
@@ -167,10 +138,10 @@ abstract class _FarmNoteStore with Store, ChangeNotifier {
   @observable
   var formData = <String, Object>{};
 
-  @observable
-  var nameForm;
-  @observable
-  var description;
+  // @observable
+  // var nameForm;
+  // @observable
+  // var description;
   @observable
   var weightArroba = 0.0;
   @observable
@@ -179,14 +150,13 @@ abstract class _FarmNoteStore with Store, ChangeNotifier {
   // @observable
   // File? pickedImage;
 
-  @action
-  bool isValidForm() {
-    return nameForm != null && nameForm != "" && storedImage != null;
-  }
+  // @action
+  // bool isValidForm() {
+  //   return nameForm != null && nameForm != "" && storedImage != null;
+  // }
 
   @action
-  void submitForm(BuildContext context, String id, String description,
-      double weightKg, double weightArroba, double growthRate) {
+  void submitForm(BuildContext context, String id) {
 
     final isValid = formKey.currentState?.validate() ?? false;
 
@@ -197,22 +167,22 @@ abstract class _FarmNoteStore with Store, ChangeNotifier {
     try {
       if (id == "") {
         addCattle(
-          nameForm,
+          formData['name'].toString(),
           storedImage,
-          description,
-          growthRate,
-          weightArroba,
-          weightKg,
+          formData['description'].toString(),
+          double.tryParse(formData['growthRate'].toString()) ?? 0,
+          double.tryParse(formData['weightArroba'].toString()) ?? 0,
+          double.tryParse(formData['weightKg'].toString()) ?? 0, 
         );
       } else {
         updateCattle(
           id,
-          nameForm,
+          formData['name'].toString(),
           storedImage,
-          description,
-          growthRate,
-          weightArroba,
-          weightKg,
+          formData['description'].toString(),
+          double.tryParse(formData['growthRate'].toString()) ?? 0,
+          double.tryParse(formData['weightArroba'].toString()) ?? 0,
+          double.tryParse(formData['weightKg'].toString()) ?? 0, 
         );
       }
     } catch (e) {
@@ -236,8 +206,23 @@ abstract class _FarmNoteStore with Store, ChangeNotifier {
 
   // Image Input
 
+  static const defaultUImage = 'assets/images/SemBoi.png';
+  // ImageProvider provider = FileImage(File(Uri.parse(defaultUImage).toString()));
+  
   @observable
-  File storedImage = File("assets/images/SemBoi.jpg");
+  File storedImage = File(Uri.parse(defaultUImage).toString());
+
+  // File takeImage(image) {
+
+  //   if (uri.path.contains(_defaultUImage)) {
+  //     provider = const AssetImage(_defaultUImage);
+  //   } else {
+  //     provider = FileImage(File(uri.toString()));
+  //   }
+
+  //   storedImage = File(provider.toString());
+  //   return storedImage;
+  // }
 
   @action
   void selectImage(File image) {

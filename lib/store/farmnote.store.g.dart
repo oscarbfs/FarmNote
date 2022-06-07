@@ -99,36 +99,6 @@ mixin _$FarmNoteStore on _FarmNoteStore, Store {
     });
   }
 
-  final _$nameFormAtom = Atom(name: '_FarmNoteStore.nameForm');
-
-  @override
-  dynamic get nameForm {
-    _$nameFormAtom.reportRead();
-    return super.nameForm;
-  }
-
-  @override
-  set nameForm(dynamic value) {
-    _$nameFormAtom.reportWrite(value, super.nameForm, () {
-      super.nameForm = value;
-    });
-  }
-
-  final _$descriptionAtom = Atom(name: '_FarmNoteStore.description');
-
-  @override
-  dynamic get description {
-    _$descriptionAtom.reportRead();
-    return super.description;
-  }
-
-  @override
-  set description(dynamic value) {
-    _$descriptionAtom.reportWrite(value, super.description, () {
-      super.description = value;
-    });
-  }
-
   final _$weightArrobaAtom = Atom(name: '_FarmNoteStore.weightArroba');
 
   @override
@@ -251,15 +221,6 @@ mixin _$FarmNoteStore on _FarmNoteStore, Store {
         name, image, description, growthRate, weightArroba, weightKg));
   }
 
-  final _$editCattleAsyncAction = AsyncAction('_FarmNoteStore.editCattle');
-
-  @override
-  Future<void> editCattle(String name, File image, String description,
-      double growthRate, double weightArroba, double weightKg) {
-    return _$editCattleAsyncAction.run(() => super.editCattle(
-        name, image, description, growthRate, weightArroba, weightKg));
-  }
-
   final _$updateCattleAsyncAction = AsyncAction('_FarmNoteStore.updateCattle');
 
   @override
@@ -304,24 +265,11 @@ mixin _$FarmNoteStore on _FarmNoteStore, Store {
   }
 
   @override
-  bool isValidForm() {
-    final _$actionInfo = _$_FarmNoteStoreActionController.startAction(
-        name: '_FarmNoteStore.isValidForm');
-    try {
-      return super.isValidForm();
-    } finally {
-      _$_FarmNoteStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void submitForm(BuildContext context, String id, String description,
-      double weightKg, double weightArroba, double growthRate) {
+  void submitForm(BuildContext context, String id) {
     final _$actionInfo = _$_FarmNoteStoreActionController.startAction(
         name: '_FarmNoteStore.submitForm');
     try {
-      return super.submitForm(
-          context, id, description, weightKg, weightArroba, growthRate);
+      return super.submitForm(context, id);
     } finally {
       _$_FarmNoteStoreActionController.endAction(_$actionInfo);
     }
@@ -357,8 +305,6 @@ weightFocus: ${weightFocus},
 descriptionFocus: ${descriptionFocus},
 imageUrlFocus: ${imageUrlFocus},
 formData: ${formData},
-nameForm: ${nameForm},
-description: ${description},
 weightArroba: ${weightArroba},
 growthRate: ${growthRate},
 storedImage: ${storedImage},

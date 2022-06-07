@@ -5,7 +5,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
 class ImageInput extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     final store = Provider.of<FarmNoteStore>(context);
@@ -19,11 +18,11 @@ class ImageInput extends StatelessWidget {
               border: Border.all(width: 1, color: Colors.grey),
             ),
             alignment: Alignment.center,
-            child: Image.asset(
-                    "assets/images/SemBoi.jpg",
-                    width: double.infinity,
-                    fit: BoxFit.cover,
-                  ),
+            child: Image.file(
+              store.storedImage,
+              width: double.infinity,
+              fit: BoxFit.cover,
+            ),
           ),
           const SizedBox(height: 10),
           Expanded(

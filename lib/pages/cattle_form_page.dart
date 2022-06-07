@@ -106,8 +106,8 @@ class CattleFormPage extends StatelessWidget {
                           focusNode: store.descriptionFocus,
                           keyboardType: TextInputType.multiline,
                           maxLines: 3,
-                          onSaved: (description) =>
-                              store.formData['description'] = description.toString(),
+                          onSaved: (description) => store
+                              .formData['description'] = description.toString(),
                         ),
                         const SizedBox(height: 10),
                         ImageInput(),
@@ -126,15 +126,7 @@ class CattleFormPage extends StatelessWidget {
                 elevation: 0,
                 tapTargetSize: MaterialTapTargetSize.shrinkWrap,
               ),
-              onPressed: () => store.submitForm(
-                context,
-                "",
-                store.formData['description'].toString(),
-                double.tryParse(store.formData['weightKg'].toString()) ?? 0.0,
-                double.tryParse(store.formData['weightArroba'].toString()) ??
-                    0.0,
-                double.tryParse(store.formData['growthRate'].toString()) ?? 0.0,
-              ),
+              onPressed: () => store.submitForm(context, ""),
             ),
           ],
         ),

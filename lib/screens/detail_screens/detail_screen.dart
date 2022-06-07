@@ -17,7 +17,12 @@ class DetailScreen extends StatelessWidget {
               SizedBox(
                 height: 230,
                 width: 450,
-                child: Image.file(
+                child: cattle.image == null 
+                ? Image.asset(
+                  "assets/images/SemBoi.jpg",
+                  fit: BoxFit.cover,
+                ) 
+                :Image.file(
                   cattle.image,
                   fit: BoxFit.cover,
                 ),
