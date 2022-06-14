@@ -5,6 +5,10 @@ import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
 class ImageInput extends StatelessWidget {
+  String initialImage;
+
+  ImageInput(this.initialImage);
+
   @override
   Widget build(BuildContext context) {
     final store = Provider.of<FarmNoteStore>(context);
@@ -18,14 +22,7 @@ class ImageInput extends StatelessWidget {
               border: Border.all(width: 1, color: Colors.grey),
             ),
             alignment: Alignment.center,
-            child: Container(
-            decoration: BoxDecoration(
-              color: Colors.green,
-              image: DecorationImage(
-                image: store.getCattleImageProvider(store.storedImage.path), // <-- Expecting ImageProvider
-              ),
-            ),
-          ),
+            child: store.showImageCattle(initialImage),
           ),
           const SizedBox(height: 10),
           Expanded(

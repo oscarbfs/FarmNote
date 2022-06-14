@@ -16,18 +16,7 @@ class CattleGridItem extends StatelessWidget {
       borderRadius: BorderRadius.circular(10),
       child: GridTile(
         child: GestureDetector(
-          child: Container(
-            decoration: BoxDecoration(
-              color: Colors.green,
-              image: DecorationImage(
-                image: store.getCattleImageProvider(cattle.image), // <-- Expecting ImageProvider
-              ),
-            ),
-          ),
-          // Image.file(
-          //   cattle.image,
-          //   fit: BoxFit.cover,
-          // ),
+          child: store.showImageCattle(cattle.image),
           onTap: () {
             Navigator.of(context).pushNamed(
               AppRoutes.CATTLE_DETAIL,

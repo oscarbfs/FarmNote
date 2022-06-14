@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:farm_note/components/image_input.dart';
 import 'package:farm_note/store/farmnote.store.dart';
 import 'package:flutter/material.dart';
@@ -13,9 +15,7 @@ class UpdateScreen extends StatelessWidget {
     store.cattleArguments(context);
     store.weightArroba = store.cattle!.weightArroba;
     store.growthRate = store.cattle!.growthRate;
-    // store.nameForm = store.cattle!.name;
-    // store.storedImage = store.cattle!.image;
-    // store.description = store.cattle!.description;
+    store.storedImage = File(Uri.parse(store.cattle!.image).toString());
     return Observer(
       builder: (_) => Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -143,7 +143,7 @@ class UpdateScreen extends StatelessWidget {
                             .formData['description'] = description.toString(),
                       ),
                       const SizedBox(height: 10),
-                      ImageInput(),
+                      ImageInput(store.storedImage.path),
                     ],
                   ),
                 ),

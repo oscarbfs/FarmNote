@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:farm_note/components/image_input.dart';
 import 'package:farm_note/store/farmnote.store.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +12,7 @@ class CattleFormPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final store = Provider.of<FarmNoteStore>(context);
-    // store.storedImage = null;
+    store.storedImage = File(Uri.parse('assets/images/SemBoi.png').toString());
     store.weightArroba = 0.0;
 
     return Scaffold(
@@ -110,7 +112,7 @@ class CattleFormPage extends StatelessWidget {
                               .formData['description'] = description.toString(),
                         ),
                         const SizedBox(height: 10),
-                        ImageInput(),
+                        ImageInput(store.storedImage.path),
                       ],
                     ),
                   ),

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:farm_note/components/image_input.dart';
 import 'package:farm_note/store/farmnote.store.dart';
 import 'package:flutter/material.dart';
@@ -13,9 +15,7 @@ class EditScreen extends StatelessWidget {
     store.cattleArguments(context);
     store.weightArroba = store.cattle!.weightArroba;
     store.growthRate = store.cattle!.growthRate;
-    // store.nameForm = store.cattle!.name;
-    // store.storedImage = store.cattle!.image;
-    // store.description = store.cattle!.description;
+    store.storedImage = File(Uri.parse(store.cattle!.image).toString());
     return Observer(
       builder: (_) => Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -42,7 +42,6 @@ class EditScreen extends StatelessWidget {
                         color: Theme.of(context).colorScheme.primary,
                       ),
                       TextFormField(
-                        // controller: store.nameController,
                         initialValue: store.cattle!.name,
                         decoration: const InputDecoration(labelText: 'Nome'),
                         textInputAction: TextInputAction.next,
@@ -51,10 +50,6 @@ class EditScreen extends StatelessWidget {
                               .requestFocus(store.weightFocus);
                         },
                         onSaved: (name) => store.formData['name'] = name ?? '',
-                        // onChanged: (name) {
-                        //   store.nameForm = name;
-                        //   store.formData['name'] = store.nameForm;
-                        // },
                         validator: (_name) {
                           final name = _name ?? '';
 
@@ -72,7 +67,6 @@ class EditScreen extends StatelessWidget {
                         children: [
                           Expanded(
                             child: TextFormField(
-                              // controller: store.weightController,
                               initialValue: store.cattle!.weightKg.toString(),
                               decoration:
                                   const InputDecoration(labelText: 'Peso(Kg)'),
@@ -148,7 +142,7 @@ class EditScreen extends StatelessWidget {
                             .formData['description'] = description.toString(),
                       ),
                       const SizedBox(height: 10),
-                      ImageInput(),
+                      ImageInput(store.storedImage.path),
                     ],
                   ),
                 ),

@@ -157,7 +157,6 @@ abstract class _FarmNoteStore with Store, ChangeNotifier {
 
   @action
   void submitForm(BuildContext context, String id) {
-
     final isValid = formKey.currentState?.validate() ?? false;
 
     if (!isValid) return;
@@ -172,7 +171,7 @@ abstract class _FarmNoteStore with Store, ChangeNotifier {
           formData['description'].toString(),
           double.tryParse(formData['growthRate'].toString()) ?? 0,
           double.tryParse(formData['weightArroba'].toString()) ?? 0,
-          double.tryParse(formData['weightKg'].toString()) ?? 0, 
+          double.tryParse(formData['weightKg'].toString()) ?? 0,
         );
       } else {
         updateCattle(
@@ -182,7 +181,7 @@ abstract class _FarmNoteStore with Store, ChangeNotifier {
           formData['description'].toString(),
           double.tryParse(formData['growthRate'].toString()) ?? 0,
           double.tryParse(formData['weightArroba'].toString()) ?? 0,
-          double.tryParse(formData['weightKg'].toString()) ?? 0, 
+          double.tryParse(formData['weightKg'].toString()) ?? 0,
         );
       }
     } catch (e) {
@@ -220,9 +219,20 @@ abstract class _FarmNoteStore with Store, ChangeNotifier {
       provider = FileImage(File(uri.toString()));
     }
 
-    return  provider;
+    return provider;
   }
-  
+
+  Widget showImageCattle(String image) {
+    return Container(
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          image: getCattleImageProvider(image),
+          fit: BoxFit.cover
+        ),
+      ),
+    );
+  }
+
   @observable
   File storedImage = File(Uri.parse(defaultUImage).toString());
 

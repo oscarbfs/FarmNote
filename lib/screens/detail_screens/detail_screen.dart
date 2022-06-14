@@ -17,15 +17,7 @@ class DetailScreen extends StatelessWidget {
           SizedBox(
             height: 230,
             width: 450,
-            child: Container(
-              decoration: BoxDecoration(
-                color: Colors.green,
-                image: DecorationImage(
-                  image: store.getCattleImageProvider(
-                      cattle.image), // <-- Expecting ImageProvider
-                ),
-              ),
-            ),
+            child: store.showImageCattle(cattle.image),
           ),
           const SizedBox(height: 10),
           Text(
