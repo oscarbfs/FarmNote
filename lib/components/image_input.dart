@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 class ImageInput extends StatelessWidget {
   String initialImage;
 
-  ImageInput(this.initialImage);
+  ImageInput(this.initialImage, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

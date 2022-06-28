@@ -10,7 +10,6 @@ class DetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final store = Provider.of<FarmNoteStore>(context);
     final Cattle cattle = ModalRoute.of(context)!.settings.arguments as Cattle;
-    // store.storedImage = cattle.image;
     return SingleChildScrollView(
       child: Column(
         children: [

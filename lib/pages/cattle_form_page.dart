@@ -32,7 +32,6 @@ class CattleFormPage extends StatelessWidget {
                     child: Column(
                       children: <Widget>[
                         TextFormField(
-                          // controller: store.nameController,
                           decoration: const InputDecoration(labelText: 'Nome'),
                           textInputAction: TextInputAction.next,
                           onFieldSubmitted: (_) {
@@ -41,10 +40,6 @@ class CattleFormPage extends StatelessWidget {
                           },
                           onSaved: (name) =>
                               store.formData['name'] = name ?? '',
-                          // onChanged: (name) {
-                          //   store.nameForm = name;
-                          //   store.formData['name'] = store.nameForm;
-                          // },
                           validator: (_name) {
                             final name = _name ?? '';
 
@@ -62,7 +57,6 @@ class CattleFormPage extends StatelessWidget {
                           children: [
                             Expanded(
                               child: TextFormField(
-                                // controller: store.weightController,
                                 decoration: const InputDecoration(
                                     labelText: 'Peso(Kg)'),
                                 textInputAction: TextInputAction.next,
@@ -88,6 +82,14 @@ class CattleFormPage extends StatelessWidget {
                                   } catch (e) {
                                     return "Isso não é um numero valido!";
                                   }
+                                  if (weight.trim().isEmpty) {
+                                    return 'Peso é obrigatório.';
+                                  }
+                                  if(weight.trim().contains(',')) {
+                                    return "Em vez de vigula, utilize ponto.";
+                                  }
+                                  
+                                  return null;
                                 },
                                 onChanged: (weight) {
                                   store.weightArroba = weight.isEmpty

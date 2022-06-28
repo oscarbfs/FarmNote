@@ -69,21 +69,6 @@ mixin _$FarmNoteStore on _FarmNoteStore, Store {
     });
   }
 
-  final _$imageUrlFocusAtom = Atom(name: '_FarmNoteStore.imageUrlFocus');
-
-  @override
-  FocusNode get imageUrlFocus {
-    _$imageUrlFocusAtom.reportRead();
-    return super.imageUrlFocus;
-  }
-
-  @override
-  set imageUrlFocus(FocusNode value) {
-    _$imageUrlFocusAtom.reportWrite(value, super.imageUrlFocus, () {
-      super.imageUrlFocus = value;
-    });
-  }
-
   final _$formDataAtom = Atom(name: '_FarmNoteStore.formData');
 
   @override
@@ -254,11 +239,11 @@ mixin _$FarmNoteStore on _FarmNoteStore, Store {
       ActionController(name: '_FarmNoteStore');
 
   @override
-  Cattle ItemByIndex(int index) {
+  Cattle itemByIndex(int index) {
     final _$actionInfo = _$_FarmNoteStoreActionController.startAction(
-        name: '_FarmNoteStore.ItemByIndex');
+        name: '_FarmNoteStore.itemByIndex');
     try {
-      return super.ItemByIndex(index);
+      return super.itemByIndex(index);
     } finally {
       _$_FarmNoteStoreActionController.endAction(_$actionInfo);
     }
@@ -303,7 +288,6 @@ mixin _$FarmNoteStore on _FarmNoteStore, Store {
 formKey: ${formKey},
 weightFocus: ${weightFocus},
 descriptionFocus: ${descriptionFocus},
-imageUrlFocus: ${imageUrlFocus},
 formData: ${formData},
 weightArroba: ${weightArroba},
 growthRate: ${growthRate},

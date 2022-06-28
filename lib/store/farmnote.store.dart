@@ -49,7 +49,7 @@ abstract class _FarmNoteStore with Store, ChangeNotifier {
   }
 
   @action
-  Cattle ItemByIndex(int index) {
+  Cattle itemByIndex(int index) {
     return _items[index];
   }
 
@@ -120,11 +120,6 @@ abstract class _FarmNoteStore with Store, ChangeNotifier {
 
   // Form
 
-  // @observable
-  // var nameController = TextEditingController();
-  // @observable
-  // var weightController = TextEditingController();
-
   @observable
   var formKey = GlobalKey<FormState>();
 
@@ -132,28 +127,13 @@ abstract class _FarmNoteStore with Store, ChangeNotifier {
   var weightFocus = FocusNode();
   @observable
   var descriptionFocus = FocusNode();
-  @observable
-  var imageUrlFocus = FocusNode();
 
   @observable
   var formData = <String, Object>{};
-
-  // @observable
-  // var nameForm;
-  // @observable
-  // var description;
   @observable
   var weightArroba = 0.0;
   @observable
   var growthRate = 0.0;
-
-  // @observable
-  // File? pickedImage;
-
-  // @action
-  // bool isValidForm() {
-  //   return nameForm != null && nameForm != "" && storedImage != null;
-  // }
 
   @action
   void submitForm(BuildContext context, String id) {
@@ -272,9 +252,9 @@ abstract class _FarmNoteStore with Store, ChangeNotifier {
 
   @observable
   List<Widget> screens = [
-    DetailScreen(),
-    UpdateScreen(),
-    EditScreen(),
+    const DetailScreen(),
+    const UpdateScreen(),
+    const EditScreen(),
   ];
 
   @action

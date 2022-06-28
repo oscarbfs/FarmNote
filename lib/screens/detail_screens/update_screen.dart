@@ -42,7 +42,6 @@ class UpdateScreen extends StatelessWidget {
                         color: Theme.of(context).colorScheme.primary,
                       ),
                       TextFormField(
-                        // controller: store.nameController,
                         initialValue: store.cattle!.name,
                         decoration: const InputDecoration(labelText: 'Nome'),
                         textInputAction: TextInputAction.next,
@@ -51,28 +50,23 @@ class UpdateScreen extends StatelessWidget {
                               .requestFocus(store.weightFocus);
                         },
                         onSaved: (name) => store.formData['name'] = name ?? '',
-                        // onChanged: (name) {
-                        //   store.nameForm = name;
-                        //   store.formData['name'] = store.nameForm;
-                        // },
                         validator: (_name) {
-                          final name = _name ?? '';
+                            final name = _name ?? '';
 
-                          if (name.trim().isEmpty) {
-                            return 'Nome é obrigatório.';
-                          }
-                          if (name.trim().length < 3) {
-                            return 'Nome precisa de no mínimo 3 caracteres.';
-                          }
+                            if (name.trim().isEmpty) {
+                              return 'Nome é obrigatório.';
+                            }
+                            if (name.trim().length < 3) {
+                              return 'Nome precisa de no mínimo 3 caracteres.';
+                            }
 
-                          return null;
-                        },
+                            return null;
+                          },
                       ),
                       Row(
                         children: [
                           Expanded(
                             child: TextFormField(
-                              // controller: store.weightController,
                               initialValue: store.cattle!.weightKg.toString(),
                               decoration:
                                   const InputDecoration(labelText: 'Peso(Kg)'),
@@ -93,13 +87,20 @@ class UpdateScreen extends StatelessWidget {
                                 store.formData['growthRate'] = store.growthRate;
                               },
                               validator: (_weight) {
-                                final weight = _weight ?? "0";
-                                try {
-                                  double.tryParse(weight);
-                                } catch (e) {
-                                  return "Isso não é um numero valido!";
-                                }
-                              },
+                                  final weight = _weight ?? "0";
+                                  try {
+                                    double.tryParse(weight);
+                                  } catch (e) {
+                                    return "Isso não é um numero valido!";
+                                  }
+                                  if (weight.trim().isEmpty) {
+                                    return 'Peso é obrigatório.';
+                                  }
+                                  if(weight.trim().contains(',')) {
+                                    return "Em vez de vigula, utilize ponto.";
+                                  }
+                                  return null;
+                                },
                               onChanged: (weight) {
                                 store.growthRate = weight.isEmpty
                                     ? 0

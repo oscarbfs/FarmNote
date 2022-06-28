@@ -51,17 +51,17 @@ class EditScreen extends StatelessWidget {
                         },
                         onSaved: (name) => store.formData['name'] = name ?? '',
                         validator: (_name) {
-                          final name = _name ?? '';
+                            final name = _name ?? '';
 
-                          if (name.trim().isEmpty) {
-                            return 'Nome é obrigatório.';
-                          }
-                          if (name.trim().length < 3) {
-                            return 'Nome precisa de no mínimo 3 caracteres.';
-                          }
+                            if (name.trim().isEmpty) {
+                              return 'Nome é obrigatório.';
+                            }
+                            if (name.trim().length < 3) {
+                              return 'Nome precisa de no mínimo 3 caracteres.';
+                            }
 
-                          return null;
-                        },
+                            return null;
+                          },
                       ),
                       Row(
                         children: [
@@ -87,30 +87,30 @@ class EditScreen extends StatelessWidget {
                                 store.formData['growthRate'] = store.growthRate;
                               },
                               validator: (_weight) {
-                                final weight = _weight ?? "0";
-                                try {
-                                  double.tryParse(weight);
-                                } catch (e) {
-                                  return "Isso não é um numero valido!";
-                                }
-                              },
+                                  final weight = _weight ?? "0";
+                                  try {
+                                    double.tryParse(weight);
+                                  } catch (e) {
+                                    return "Isso não é um numero valido!";
+                                  }
+                                  if (weight.trim().isEmpty) {
+                                    return 'Peso é obrigatório.';
+                                  }
+                                  if(weight.trim().contains(',')) {
+                                    return "Em vez de vigula, utilize ponto.";
+                                  }
+                                  return null;
+                                },
                               onChanged: (weight) {
                                 store.weightArroba = weight.trim().isEmpty
                                     ? 0
                                     : double.parse(weight) / 30;
 
-                                if (store.cattle!.growthRate != 0.0) {
-                                  store.growthRate = weight.isEmpty
-                                      ? 0
-                                      : 100 -
-                                          ((double.parse(weight) /
-                                                  store.cattle!.weightKg) *
-                                              100);
-                                  store.growthRate = (double.parse(weight) /
-                                              store.cattle!.weightKg) *
-                                          100 -
-                                      store.growthRate;
-                                }
+                                double weightBase = (100*store.cattle!.weightKg) / (store.cattle!.growthRate + 100) ;
+
+                                store.growthRate = weight.isEmpty
+                                    ? 0
+                                    : ((double.parse(weight) -  weightBase) / weightBase) * 100;
                               },
                             ),
                           ),
