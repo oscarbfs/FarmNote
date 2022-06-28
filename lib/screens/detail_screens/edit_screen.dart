@@ -158,7 +158,31 @@ class EditScreen extends StatelessWidget {
               elevation: 0,
               tapTargetSize: MaterialTapTargetSize.shrinkWrap,
             ),
-            onPressed: () => store.submitForm(context, store.cattle!.id),
+            onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (ctx) => AlertDialog(
+                    title: const Text('Editar Gado'),
+                    content: const Text('Tem certeza?'),
+                    actions: [
+                      TextButton(
+                        child: const Text(
+                          'Não',
+                          style: TextStyle(color: Colors.red),
+                        ),
+                        onPressed: () => Navigator.of(ctx).pop(),
+                      ),
+                      TextButton(
+                        child: const Text('Sim'),
+                        onPressed: () {
+                          Navigator.of(ctx).pop();
+                          store.submitForm(context, store.cattle!.id);
+                        },
+                      ),
+                    ],
+                  ),
+                );
+              },
           ),
         ],
       ),
